@@ -3,70 +3,45 @@ const moles = document.querySelectorAll('.mole');
 const startButton = document.querySelector('#start');
 // TODO: Add the missing query selectors:
 const score = document.querySelector('#score'); // Use querySelector() to get the score element
+//Made changes to const score, added querySelector score.
 const timerDisplay = document.querySelector('#timer'); // use querySelector() to get the timer element.
-const audioHit = new Audio("../assets/hit.mp3");
-const moleSong = new Audio("../assets/molesong.mp3");
+//Made changes to const timerDisplay, added querySelector timer.
 
 let time = 0;
 let timer;
 let lastHole = 0;
 let points = 0;
-let difficulty = "hard";
+let difficulty = "normal";
 
-
-/**
- * Generates a random integer within a range.
- *
- * The function takes two values as parameters that limits the range 
- * of the number to be generated. For example, calling randomInteger(0,10)
- * will return a random integer between 0 and 10. Calling randomInteger(10,200)
- * will return a random integer between 10 and 200.
- *
- */
 function randomInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+//ADDED THE RANDOMINTEGER FUNCTION, ALREADY IMPLEMENTED FOR ME, SELECTS RANDOM TIME THE MOLES COME OUT OF THEIR HOLES DURING THE GAME.
 
-/**
- * Sets the time delay given a difficulty parameter.
- *
- * The function takes a `difficulty` parameter that can have three values: `easy`
- * `normal` or `hard`. If difficulty is "easy" then the function returns a time delay
- * of 1500 milliseconds (or 1.5 seconds). If the difficulty is set to "normal" it should
- * return 1000. If difficulty is set to "hard" it should return a randomInteger between
- * 600 and 1200.
- *
- * Example: 
- * setDelay("easy") //> returns 1500
- * setDelay("normal") //> returns 1000
- * setDelay("hard") //> returns 856 (returns a random number between 600 and 1200).
- *
- */
+console.log("A random integer between 0 and 10");
+console.log(randomInteger(0, 10));
+console.log("Another random integer between 0 and 10");
+console.log(randomInteger(0, 10));
+console.log("A random number between 600 and 1200");
+console.log(randomInteger(600, 1200));
+//ADDED RANDON INTETGERS
+
+
 function setDelay(difficulty) {
   // TODO: Write your code here.
-  if (difficulty === 'easy') {
+  if (difficulty === "easy") {
     return 1500;
-  } else if (difficulty === 'normal') {
+    // SETTING DIFFICULTY FOR EASY
+  } if (difficulty === "normal") {
     return 1000;
-  } else if (difficulty === 'hard') {
-    return Math.floor(Math.random() * (1200 - 600 + 1)) + 600;
+    // SETTING DIFFICULTY FOR NORMAL
+  } if (difficulty === "hard") {
+    return randomInteger(600, 1200);
+  //SETTING DIFFICULTY FOR HARD
   }
 }
 
-/**
- * Chooses a random hole from a list of holes.
- *
- * This function should select a random Hole from the list of holes.
- * 1. generate a random integer from 0 to 8 and assign it to an index variable
- * 2. get a random hole with the random index (e.g. const hole = holes[index])
- * 3. if hole === lastHole then call chooseHole(holes) again.
- * 4. if hole is not the same as the lastHole then keep track of 
- * it (lastHole = hole) and return the hole
- *
- * Example: 
- * const holes = document.querySelectorAll('.hole');
- * chooseHole(holes) //> returns one of the 9 holes that you defined
- */
+
 function chooseHole(holes) {
   // TODO: Write your code here.
   const index = randomInteger(0,8);
@@ -74,46 +49,27 @@ function chooseHole(holes) {
   if (hole === lastHole) {
     return chooseHole(holes);
   }
-  lastHole = hole;
-  return hole;
+    lastHole = hole;
+  return hole; 
 }
 
 /**
 *
-* Calls the showUp function if time > 0 and stops the game if time = 0.
-*
-* The purpose of this function is simply to determine if the game should
-* continue or stop. The game continues if there is still time `if(time > 0)`.
-* If there is still time then `showUp()` needs to be called again so that
-* it sets a different delay and a different hole. If there is no more time
-* then it should call the `stopGame()` function. The function also needs to
-* return the timeoutId if the game continues or the string "game stopped"
-* if the game is over.
-*
-*  // if time > 0:
-*  //   timeoutId = showUp()
-*  //   return timeoutId
-*  // else
-*  //   gameStopped = stopGame()
-*  //   return gameStopped
-*
+
 */
 function gameOver() {
   // TODO: Write your code here
-  if (time > 0) {
-    return showUp()
+  if (time > 0){
+    let timeoutId = showUp();
+    return timeoutId;
   } else {
-    return stopGame()
+    let gameStopped = stopGame();
+    return gameStopped;
   }
 }
 
 /**
 *
-* Calls the showAndHide() function with a specific delay and a hole.
-*
-* This function simply calls the `showAndHide` function with a specific
-* delay and hole. The function needs to call `setDelay()` and `chooseHole()`
-* to call `showAndHide(hole, delay)`.
 *
 */
 function showUp() {
@@ -124,20 +80,17 @@ function showUp() {
 
 /**
 *
-* The purpose of this function is to show and hide the mole given
-* a delay time and the hole where the mole is hidden. The function calls
-* `toggleVisibility` to show or hide the mole. The function should return
-* the timeoutID
+
 *
 */
 function showAndHide(hole, delay){
   // TODO: call the toggleVisibility function so that it adds the 'show' class.
-  toggleVisibility(hole)
+  toggleVisibility(hole);
   const timeoutID = setTimeout(() => {
     // TODO: call the toggleVisibility function so that it removes the 'show' class when the timer times out.
-    toggleVisibility(hole)
+    toggleVisibility(hole);
     gameOver();
-  }, delay); // TODO: change the setTimeout delay to the one provided as a parameter
+  }, 1000); // TODO: change the setTimeout delay to the one provided as a parameter
   return timeoutID;
 }
 
@@ -149,7 +102,7 @@ function showAndHide(hole, delay){
 */
 function toggleVisibility(hole){
   // TODO: add hole.classList.toggle so that it adds or removes the 'show' class.
-  hole.classList.toggle('show')
+  hole.classList.toggle('show');
   return hole;
 }
 
@@ -179,8 +132,6 @@ function updateScore() {
 */
 function clearScore() {
   // TODO: Write your code here
-  // points = 0;
-  // score.textContent = points;
   points = 0;
   score.textContent = points;
   return points;
@@ -209,8 +160,7 @@ function updateTimer() {
 */
 function startTimer() {
   // TODO: Write your code here
-  // timer = setInterval(updateTimer, 1000);
-  timer = setInterval(updateTimer, 1000);
+  setInterval(updateTimer, 1000);
   return timer;
 }
 
@@ -223,11 +173,8 @@ function startTimer() {
 *
 */
 function whack(event) {
-  // TODO: Write your code here.
-  // call updateScore()
+  // TODO: Write your code here
   updateScore();
-  //audioHit.currentTime = 0;
-  //audioHit.play();
   return points;
 }
 
@@ -239,8 +186,7 @@ function whack(event) {
 function setEventListeners(){
   // TODO: Write your code here
   moles.forEach(
-    mole => mole.addEventListener('click', whack)
-  );
+    mole => mole.addEventListener('click', whack));
   return moles;
 }
 
@@ -263,8 +209,6 @@ function setDuration(duration) {
 */
 function stopGame(){
   // stopAudio(song);  //optional
-  //moleSong.pause();
-  //moleSong.currentTime = 0;
   clearInterval(timer);
   return "game stopped";
 }
@@ -276,18 +220,36 @@ function stopGame(){
 *
 */
 function startGame(){
+  showUp();
   points = 0;
   clearScore();
-  setDuration(10);
-  showUp();
+  setDuration(30);
   startTimer();
   setEventListeners();
-  //moleSong.currentTime = 0;
-  //moleSong.play();
-
+  
   return "game started";
 }
 
+
+const audioHit = new Audio("https://github.com/gabrielsanchez/erddiagram/blob/main/hit.mp3?raw=true");
+const song = new Audio("https://github.com/gabrielsanchez/erddiagram/blob/main/molesong.mp3?raw=true");
+
+function playAudio(audioObject) {
+  audioObject.play();
+}
+
+function loopAudio(audioObject) {
+  audioObject.loop = true;
+  playAudio(audioObject);
+}
+
+function stopAudio(audioObject) {
+  audioObject.pause();
+}
+
+function play(){
+  playAudio(song);
+}
 startButton.addEventListener("click", startGame);
 
 
