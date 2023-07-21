@@ -13,6 +13,7 @@ let lastHole = 0;
 let points = 0;
 let difficulty = "hard";
 
+
 /**
  * Generates a random integer within a range.
  *
@@ -23,7 +24,7 @@ let difficulty = "hard";
  *
  */
 function randomInteger(min, max) {
-   return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 /**
@@ -43,14 +44,14 @@ function randomInteger(min, max) {
  */
 function setDelay(difficulty) {
   // TODO: Write your code here.
-    if (difficulty === 'easy') {
+  if (difficulty === 'easy') {
     return 1500;
   } else if (difficulty === 'normal') {
     return 1000;
   } else if (difficulty === 'hard') {
     return Math.floor(Math.random() * (1200 - 600 + 1)) + 600;
   }
-}}
+}
 
 /**
  * Chooses a random hole from a list of holes.
@@ -68,7 +69,7 @@ function setDelay(difficulty) {
  */
 function chooseHole(holes) {
   // TODO: Write your code here.
-const index = randomInteger(0,8);
+  const index = randomInteger(0,8);
   const hole = holes[index];
   if (hole === lastHole) {
     return chooseHole(holes);
